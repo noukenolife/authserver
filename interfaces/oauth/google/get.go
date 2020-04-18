@@ -21,7 +21,7 @@ func (s GetGoogleAuthURL) Invoke(c *gin.Context) {
 
 	output, err := s.GetAuthURL.Invoke(input)
 	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, err)
+		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 	c.JSON(http.StatusOK, output)
