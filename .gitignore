@@ -1,3 +1,4 @@
 .vscode
 .env
 .ssl
+.DS_Store
