@@ -13,7 +13,7 @@ import (
 func main() {
 	godotenv.Load()
 
-	serverAddress := helper.GetEnvWithDefaultValue("SERVER_ADDRESS", "https://localhost")
+	serverAddress := helper.GetEnvWithDefaultValue("SERVER_ADDRESS", "https://127.0.0.1:3000")
 	parsedServerAddress, err := url.Parse(serverAddress)
 	if err != nil {
 		panic(serverAddress + " is not a valid address.")
@@ -29,5 +29,11 @@ func main() {
 	container.Router.InitRoutes(r)
 
 	fmt.Println("Running: " + parsedServerAddress.String() + "\n")
-	r.Run(parsedServerAddress.Host)
+
+	mode := helper.GetEnvWithDefaultValue("MODE", "development")
+	if mode == "development" {
+		r.RunTLS(parsedServerAddress.Host, ".ssl/server.crt", ".ssl/server.key")
+	} else if mode == "production" {
+		r.Run(parsedServerAddress.Host)
+	}
 }
