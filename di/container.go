@@ -1,12 +1,12 @@
 package di
 
 import (
-	"github.com/noukenolife/authserver/application/oauth/service"
-	"github.com/noukenolife/authserver/infrastructure/oauth/google/adaptor"
-	"github.com/noukenolife/authserver/infrastructure/oauth/google/factory"
+	"github.com/noukenolife/authserver/application/oauth2/service"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/google/adaptor"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/google/factory"
 	"github.com/noukenolife/authserver/interfaces"
-	igoogle "github.com/noukenolife/authserver/interfaces/oauth/google"
-	"github.com/noukenolife/authserver/interfaces/oauth/google/token"
+	igoogle "github.com/noukenolife/authserver/interfaces/oauth2/google"
+	"github.com/noukenolife/authserver/interfaces/oauth2/google/token"
 )
 
 type Container struct {

@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/noukenolife/authserver/application/errors"
-	"github.com/noukenolife/authserver/application/oauth/port"
+	"github.com/noukenolife/authserver/application/oauth2/port"
 )
 
 type GetAccessTokenInput struct {

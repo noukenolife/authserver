@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/noukenolife/authserver/application/oauth/port"
+	"github.com/noukenolife/authserver/application/oauth2/port"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,8 +18,8 @@ func (s MockGetAuthUrl) Invoke(input port.GetAuthURLInput) (output port.GetAuthU
 
 func TestGetAuthUrl_Invoke(t *testing.T) {
 	service := GetAuthURL{
-		GetAuthURL: MockGetAuthUrl{Ouput: port.GetAuthURLOutput{"https://api.twitter.com/oauth/authorize?oauth_token=fake_oauth_token"}},
+		GetAuthURL: MockGetAuthUrl{Ouput: port.GetAuthURLOutput{"http://example.com/authurl"}},
 	}
-	output, _ := service.Invoke(GetAuthURLInput{})
-	assert.Equal(t, "https://api.twitter.com/oauth/authorize?oauth_token=fake_oauth_token", output.URL)
+	output, _ := service.Invoke(GetAuthURLInput{Scopes: []string{}})
+	assert.Equal(t, "http://example.com/authurl", output.URL)
 }

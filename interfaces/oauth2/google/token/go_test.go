@@ -10,7 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/assert/v2"
-	"github.com/noukenolife/authserver/application/oauth/service"
+	"github.com/noukenolife/authserver/application/oauth2/service"
 	"github.com/stretchr/testify/mock"
 )
 

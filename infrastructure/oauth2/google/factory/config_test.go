@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/noukenolife/authserver/infrastructure/oauth/errors"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/errors"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"

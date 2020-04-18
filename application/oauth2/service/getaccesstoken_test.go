@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/noukenolife/authserver/application/oauth/port"
+	"github.com/noukenolife/authserver/application/oauth2/port"
 	"github.com/stretchr/testify/assert"
 )
 
