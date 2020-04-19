@@ -12,13 +12,6 @@ type GetTwitterAuthURL struct {
 }
 
 func (s GetTwitterAuthURL) Invoke(c *gin.Context) {
-	// var input service.GetAuthURLInput
-	// err := c.BindJSON(&input)
-	// if err != nil {
-	// 	c.AbortWithError(http.StatusBadRequest, err)
-	// 	return
-	// }
-
 	output, err := s.GetAuthURL.Invoke(service.GetAuthURLInput{})
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
