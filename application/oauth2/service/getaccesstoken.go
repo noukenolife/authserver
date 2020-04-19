@@ -2,17 +2,16 @@ package service
 
 import (
 	"github.com/noukenolife/authserver/application/errors"
-	"github.com/noukenolife/authserver/application/oauth/port"
+	"github.com/noukenolife/authserver/application/oauth2/port"
 )
 
 type GetAccessTokenInput struct {
-	OAuthToken    string `form:"oauth_token" binding:"required"`
-	OAuthVerifier string `form:"oauth_verifier" binding:"required"`
+	State string `form:"state" binding:"required"`
+	Code  string `form:"code" binding:"required"`
 }
 
 type GetAccessTokenOutput struct {
-	OAuthToken       string `json:"oauth_token"`
-	OAuthTokenSecret string `json:"oauth_token_secret"`
+	AccessToken string `json:"access_token"`
 }
 
 type GetAccessTokenInterface interface {
@@ -26,8 +25,7 @@ type GetAccessToken struct {
 
 func (s GetAccessToken) Invoke(input GetAccessTokenInput) (output GetAccessTokenOutput, err error) {
 	pOutput, pErr := s.GetAccessToken.Invoke(port.GetAccessTokenInput{
-		OAuthToken:    input.OAuthToken,
-		OAuthVerifier: input.OAuthVerifier,
+		Code: input.Code,
 	})
 	if pErr != nil {
 		err = &errors.UnexpectedError{
@@ -37,8 +35,7 @@ func (s GetAccessToken) Invoke(input GetAccessTokenInput) (output GetAccessToken
 		return
 	}
 	output = GetAccessTokenOutput{
-		OAuthToken:       pOutput.OAuthToken,
-		OAuthTokenSecret: pOutput.OAuthTokenSecret,
+		AccessToken: pOutput.AccessToken,
 	}
 	return
 }

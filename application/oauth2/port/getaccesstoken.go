@@ -1,13 +1,11 @@
 package port
 
 type GetAccessTokenInput struct {
-	OAuthToken    string
-	OAuthVerifier string
+	Code string
 }
 
 type GetAccessTokenOutput struct {
-	OAuthToken       string
-	OAuthTokenSecret string
+	AccessToken string
 }
 
 type GetAccessToken interface {

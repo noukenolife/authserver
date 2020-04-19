@@ -1,8 +1,8 @@
 package adaptor
 
 import (
-	"github.com/noukenolife/authserver/application/oauth/port"
-	"github.com/noukenolife/authserver/infrastructure/oauth/factory"
+	"github.com/noukenolife/authserver/application/oauth2/port"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/factory"
 	"golang.org/x/oauth2"
 )
 

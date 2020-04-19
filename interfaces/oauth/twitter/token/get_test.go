@@ -32,11 +32,12 @@ func (s *MockGetAccessToken) Invoke(input service.GetAccessTokenInput) (output s
 func TestGetGoogleAccessToken(t *testing.T) {
 	t.Run("should return an access token successfully", func(t *testing.T) {
 		input := service.GetAccessTokenInput{
-			State: "STATE",
-			Code:  "CODE",
+			OAuthToken:    "OAUTH_TOKEN",
+			OAuthVerifier: "OAUTH_VERIFIER",
 		}
 		output := service.GetAccessTokenOutput{
-			AccessToken: "ACCESS_TOKEN",
+			OAuthToken:       "OAUTH_TOKEN",
+			OAuthTokenSecret: "OAUTH_TOKEN_SECRET",
 		}
 
 		mockGetAccessToken := new(MockGetAccessToken)
@@ -45,18 +46,18 @@ func TestGetGoogleAccessToken(t *testing.T) {
 			input,
 		).Return(output, nil)
 
-		getGoogleAccessToken := GetGoogleAccessToken{
+		getTwitterAccessToken := GetTwitterAccessToken{
 			GetAccessToken: mockGetAccessToken,
 		}
 
 		r := gin.Default()
-		r.GET("/oauth/google/token", getGoogleAccessToken.Invoke)
+		r.GET("/oauth/twitter/token", getTwitterAccessToken.Invoke)
 
 		w := httptest.NewRecorder()
-		url, _ := url.Parse("/oauth/google/token")
+		url, _ := url.Parse("/oauth/twitter/token")
 		q := url.Query()
-		q.Set("state", "STATE")
-		q.Set("code", "CODE")
+		q.Set("oauth_token", "OAUTH_TOKEN")
+		q.Set("oauth_verifier", "OAUTH_VERIFIER")
 		url.RawQuery = q.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -68,22 +69,22 @@ func TestGetGoogleAccessToken(t *testing.T) {
 		assert.Equal(t, output, response)
 	})
 	t.Run("should respond 400 when query string is invalid", func(t *testing.T) {
-		getGoogleAccessToken := GetGoogleAccessToken{}
+		getTwitterAccessToken := GetTwitterAccessToken{}
 
 		r := gin.Default()
-		r.GET("/oauth/google/token", getGoogleAccessToken.Invoke)
+		r.GET("/oauth/twitter/token", getTwitterAccessToken.Invoke)
 
 		w := httptest.NewRecorder()
 
-		req, _ := http.NewRequest("GET", "/oauth/google/token", nil)
+		req, _ := http.NewRequest("GET", "/oauth/twitter/token", nil)
 		r.ServeHTTP(w, req)
 
 		assert.Equal(t, 400, w.Code)
 	})
 	t.Run("should respond 500 when failed to get an access token", func(t *testing.T) {
 		input := service.GetAccessTokenInput{
-			State: "STATE",
-			Code:  "CODE",
+			OAuthToken:    "OAUTH_TOKEN",
+			OAuthVerifier: "OAUTH_VERIFIER",
 		}
 
 		mockGetAccessToken := new(MockGetAccessToken)
@@ -92,18 +93,18 @@ func TestGetGoogleAccessToken(t *testing.T) {
 			input,
 		).Return(nil, errors.New("Some Error"))
 
-		getGoogleAccessToken := GetGoogleAccessToken{
+		getTwitterAccessToken := GetTwitterAccessToken{
 			GetAccessToken: mockGetAccessToken,
 		}
 
 		r := gin.Default()
-		r.GET("/oauth/google/token", getGoogleAccessToken.Invoke)
+		r.GET("/oauth/twitter/token", getTwitterAccessToken.Invoke)
 
 		w := httptest.NewRecorder()
-		url, _ := url.Parse("/oauth/google/token")
+		url, _ := url.Parse("/oauth/twitter/token")
 		q := url.Query()
-		q.Set("state", "STATE")
-		q.Set("code", "CODE")
+		q.Set("oauth_token", "OAUTH_TOKEN")
+		q.Set("oauth_verifier", "OAUTH_VERIFIER")
 		url.RawQuery = q.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)

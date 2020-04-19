@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/go-playground/assert/v2"
-	"github.com/noukenolife/authserver/application/oauth/port"
-	"github.com/noukenolife/authserver/infrastructure/oauth"
-	"github.com/noukenolife/authserver/infrastructure/oauth/factory"
+	"github.com/noukenolife/authserver/application/oauth2/port"
+	infoauth2 "github.com/noukenolife/authserver/infrastructure/oauth2"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/factory"
 	"github.com/stretchr/testify/mock"
 	"golang.org/x/oauth2"
 )
@@ -18,12 +18,12 @@ type MockOAuthConfigFactory struct {
 	MockConfig *MockConfig
 }
 
-func (s MockOAuthConfigFactory) Create(scopes []string) (oauth.OAuthConfigInterface, error) {
+func (s MockOAuthConfigFactory) Create(scopes []string) (infoauth2.OAuthConfigInterface, error) {
 	return s.MockConfig, nil
 }
 
 type MockConfig struct {
-	oauth.OAuthConfigInterface
+	infoauth2.OAuthConfigInterface
 	mock.Mock
 }
 

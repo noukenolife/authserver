@@ -1,6 +1,7 @@
 package port
 
 type GetAuthURLInput struct {
+	Scopes []string
 }
 
 type GetAuthURLOutput struct {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/noukenolife/authserver/application/oauth/port"
+	"github.com/noukenolife/authserver/application/oauth2/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -26,8 +26,8 @@ func (s *MockGetAuthURL) Invoke(input port.GetAuthURLInput) (output port.GetAuth
 
 func TestGetAuthURL(t *testing.T) {
 	t.Run("should get an auth url successfully", func(t *testing.T) {
-		pInput := port.GetAuthURLInput{}
-		pOutput := port.GetAuthURLOutput{"https://api.twitter.com/oauth/authorize?oauth_token=fake_oauth_token"}
+		pInput := port.GetAuthURLInput{Scopes: []string{}}
+		pOutput := port.GetAuthURLOutput{"http://example.com/authurl"}
 
 		mockGetAuthURL := new(MockGetAuthURL)
 		mockGetAuthURL.On("Invoke", pInput).Return(pOutput, nil)
@@ -35,11 +35,11 @@ func TestGetAuthURL(t *testing.T) {
 		service := GetAuthURL{
 			GetAuthURL: mockGetAuthURL,
 		}
-		output, _ := service.Invoke(GetAuthURLInput{})
-		assert.Equal(t, "https://api.twitter.com/oauth/authorize?oauth_token=fake_oauth_token", output.URL)
+		output, _ := service.Invoke(GetAuthURLInput{Scopes: []string{}})
+		assert.Equal(t, "http://example.com/authurl", output.URL)
 	})
 	t.Run("should fail when failed to get an auth url", func(t *testing.T) {
-		pInput := port.GetAuthURLInput{}
+		pInput := port.GetAuthURLInput{Scopes: []string{}}
 
 		mockGetAuthURL := new(MockGetAuthURL)
 		mockGetAuthURL.On("Invoke", pInput).Return(nil, errors.New("Some Error"))
@@ -47,7 +47,7 @@ func TestGetAuthURL(t *testing.T) {
 		service := GetAuthURL{
 			GetAuthURL: mockGetAuthURL,
 		}
-		_, err := service.Invoke(GetAuthURLInput{})
+		_, err := service.Invoke(GetAuthURLInput{Scopes: []string{}})
 		assert.NotNil(t, err)
 	})
 }

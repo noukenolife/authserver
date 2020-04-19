@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/noukenolife/authserver/application/oauth/port"
+	"github.com/noukenolife/authserver/application/oauth2/port"
 	"github.com/noukenolife/authserver/helper"
-	"github.com/noukenolife/authserver/infrastructure/oauth/google/factory"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/google/factory"
 	"github.com/stretchr/testify/assert"
 )
 

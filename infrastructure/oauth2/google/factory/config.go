@@ -3,9 +3,9 @@ package factory
 import (
 	"os"
 
-	"github.com/noukenolife/authserver/infrastructure/oauth"
-	"github.com/noukenolife/authserver/infrastructure/oauth/errors"
-	"github.com/noukenolife/authserver/infrastructure/oauth/factory"
+	infoauth2 "github.com/noukenolife/authserver/infrastructure/oauth2"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/errors"
+	"github.com/noukenolife/authserver/infrastructure/oauth2/factory"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -14,7 +14,7 @@ type GoogleOAuthConfigFactory struct {
 	factory.OAuthConfigFactoryInterface
 }
 
-func (s GoogleOAuthConfigFactory) Create(scopes []string) (config oauth.OAuthConfigInterface, err error) {
+func (s GoogleOAuthConfigFactory) Create(scopes []string) (config infoauth2.OAuthConfigInterface, err error) {
 	ClientID, exists := os.LookupEnv("GOOGLE_OAUTH_CLIENT_ID")
 	if !exists {
 		err = &errors.InvalidConfigError{Message: "Google oauth client id is not specified."}
