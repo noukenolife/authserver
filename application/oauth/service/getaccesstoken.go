@@ -6,13 +6,13 @@ import (
 )
 
 type GetAccessTokenInput struct {
-	OAuthToken    string
-	OAuthVerifier string
+	OAuthToken    string `form:"oauth_token" binding:"required"`
+	OAuthVerifier string `form:"oauth_verifier" binding:"required"`
 }
 
 type GetAccessTokenOutput struct {
-	OAuthToken       string
-	OAuthTokenSecret string
+	OAuthToken       string `json:"oauth_token"`
+	OAuthTokenSecret string `json:"oauth_token_secret"`
 }
 
 type GetAccessTokenInterface interface {
@@ -25,7 +25,10 @@ type GetAccessToken struct {
 }
 
 func (s GetAccessToken) Invoke(input GetAccessTokenInput) (output GetAccessTokenOutput, err error) {
-	pOutput, pErr := s.GetAccessToken.Invoke(port.GetAccessTokenInput{})
+	pOutput, pErr := s.GetAccessToken.Invoke(port.GetAccessTokenInput{
+		OAuthToken:    input.OAuthToken,
+		OAuthVerifier: input.OAuthVerifier,
+	})
 	if pErr != nil {
 		err = &errors.UnexpectedError{
 			Message: "Failed to get an access token",

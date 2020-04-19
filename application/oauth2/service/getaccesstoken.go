@@ -11,7 +11,7 @@ type GetAccessTokenInput struct {
 }
 
 type GetAccessTokenOutput struct {
-	AccessToken string
+	AccessToken string `json:"access_token"`
 }
 
 type GetAccessTokenInterface interface {
